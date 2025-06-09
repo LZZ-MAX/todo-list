@@ -12,6 +12,10 @@
             <div class="card-body">
                 <form method="POST" action="{{ url_for('add_task') }}">
                     <div class="mb-3">
+                        <label for="category" class="form-check-label">分類</label>
+                        <input type="text" name="category" id="category" class="form-control" placeholder="例如：工作、個人、學校等">
+                    </div>
+                    <div class="mb-3">
                         <label for="title" class="form-label">標題</label>
                         <input type="text" class="form-control" id="title" name="title" required>
                     </div>
@@ -44,4 +48,4 @@
         </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}

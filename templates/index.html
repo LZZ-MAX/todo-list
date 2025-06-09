@@ -5,6 +5,7 @@
 {% block content %}
 <div class="row">
     <div class="col-md-12">
+        <!-- 標題與新增按鈕 -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>我的待辦事項</h2>
             <a href="{{ url_for('add_task') }}" class="btn btn-primary">
@@ -12,6 +13,20 @@
             </a>
         </div>
 
+        <!-- 分類篩選器 -->
+        <form method="get" action="{{ url_for('index') }}" class="mb-4">
+            <div class="input-group" style="max-width: 300px;">
+                <label class="input-group-text" for="category">分類篩選</label>
+                <select name="category" id="category" class="form-select" onchange="this.form.submit()">
+                    <option value="">全部分類</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+        <!-- 任務清單 -->
         <div class="card">
             <div class="card-body">
                 {% if tasks %}
@@ -24,7 +39,8 @@
                                             {{ task.title }}
                                         </h5>
                                         <p class="mb-1 text-muted">{{ task.description }}</p>
-                                        <small class="text-muted">截止日期：{{ task.due_date.strftime('%Y-%m-%d') }}</small>
+                                        <small class="text-muted">截止日期：{{ task.due_date.strftime('%Y-%m-%d') }}</small><br>
+                                        <small class="text-muted">分類：{{ task.category or '未分類' }}</small>
                                     </div>
                                     <div class="btn-group">
                                         <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn btn-sm btn-outline-primary">
@@ -54,4 +70,4 @@
         </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}
